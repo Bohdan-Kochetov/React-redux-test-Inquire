@@ -1,95 +1,47 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { productFetchData, selected, chooseProductId } from './store/reducer';
-import { ProductDetalis } from './ProductDetalis';
-import { FormToAdd } from './FormToAdd';
+import { postsFetchData } from './store/reducerPost';
+import { commentsFetchData } from './store/reducerComments';
 import './App.scss';
-import { State } from './react-app-env';
+import { PostDetails } from './components/PostDetails';
+import { PostsList } from './components/PostsList';
+import { NewPostForm } from './components/NewPostForm';
 
 const App: React.FC = () => {
+  const { selectedPost } = useSelector((state: any) => state.reducerPost);
+
   const dispatch = useDispatch();
-  const {
-    productToRender, select, productId, add,
-  } = useSelector((state: State) => state.reducer);
 
   useEffect(() => {
-    dispatch(productFetchData());
-  }, [select]);
+    dispatch(postsFetchData());
+  }, []);
+
+  useEffect(() => {
+    dispatch(commentsFetchData());
+  }, []);
 
   return (
-    <div className="App">
-      <h1>List of products</h1>
-      Sort by:
-      {' '}
-      <select
-        value={select}
-        onChange={event => {
-          dispatch(selected(event.target.value));
-          dispatch({
-            type: event.target.value,
-          });
-        }}
-      >
-        <option value="select">Choose</option>
-        <option value="alphabetically">Alphabetically</option>
-        <option value="count">Count</option>
-      </select>
-      <ul className="list-group">
-        {productToRender.map((item: any) => {
-          return (
-            <>
-              <li key={item.id} className="list-group-item">
-                <h2 className="h2">{item.name}</h2>
-                <button
-                  className="btn btn-info"
-                  type="button"
-                  onClick={() => dispatch(chooseProductId(item.id))}
-                >
-                  Show details
+    <>
+      <div className="App">
+        <header className="App__header">
+          <h2>List of Posts</h2>
+        </header>
 
-                </button>
-                <button
-                  className="btn btn-danger"
-                  type="button"
-                  onClick={() => dispatch({
-                    type: 'delete',
-                    id: item.id,
-                  })}
-                >
-                  Delete
+        <main className="App__main">
+          <div className="App__sidebar">
+            <PostsList />
+          </div>
 
-                </button>
-              </li>
-            </>
-          );
-        })}
-      </ul>
-      <div>
-        <button
-          className="btn btn-success"
-          type="button"
-          onClick={() => dispatch({
-            type: 'add',
-            add: true,
-          })}
-        >
-          Add Product
+          <div className="App__content">
+            <h2>Create new Post</h2>
+            <NewPostForm />
+            {selectedPost ? <PostDetails /> : <h2>Open Post details</h2>}
 
-        </button>
+          </div>
+        </main>
       </div>
-
-      {add && (
-        <div>
-          <h2>Give me some informarion, and then I can add a product  :)</h2>
-          <FormToAdd />
-        </div>
-      )}
-      {productId && (
-        <ProductDetalis />
-      )}
-    </div>
+    </>
   );
 };
 
 export default App;
-// qqq
