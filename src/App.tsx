@@ -6,10 +6,10 @@ import './App.scss';
 import { PostDetails } from './components/PostDetails';
 import { PostsList } from './components/PostsList';
 import { NewPostForm } from './components/NewPostForm';
+import { State } from './react-app-env';
 
 const App: React.FC = () => {
-  const { selectedPost } = useSelector((state: any) => state.reducerPost);
-
+  const { selectedPost } = useSelector((state: State) => state.reducerPost);
   const dispatch = useDispatch();
 
   useEffect(() => {

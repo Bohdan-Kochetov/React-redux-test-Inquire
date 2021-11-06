@@ -5,7 +5,7 @@ const initialState = {
   comments: [],
 };
 
-export function commentsSuccess(comments: any) {
+export function commentsSuccess(comments: Comment[]) {
   return {
     type: 'commentsSuccess',
     comments,

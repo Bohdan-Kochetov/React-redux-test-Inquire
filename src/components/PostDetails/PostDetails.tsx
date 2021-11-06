@@ -37,7 +37,7 @@ export const PostDetails: React.FC = () => {
 
       <section className="PostDetails__comments">
         {currentComemnts.length ? (
-          currentComemnts.map((comment: any) => {
+          currentComemnts.map((comment: Comment) => {
             const { body, id } = comment;
 
             return (

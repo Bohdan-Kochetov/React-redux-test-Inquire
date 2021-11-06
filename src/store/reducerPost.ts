@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { request } from '../api';
 import { Post } from '../react-app-env';
 
@@ -8,7 +7,7 @@ const initialState = {
   handleEdit: false,
 };
 
-export function postsSuccess(posts: any) {
+export function postsSuccess(posts: Post[]) {
   return {
     type: 'postsSuccess',
     posts,
@@ -44,8 +43,6 @@ type NewPost = [number, string, string];
 
 function addEditPost(posts: Post[], newPost: NewPost) {
   const [id, title, body] = newPost;
-
-  console.log(newPost);
 
   const newPosts = posts.filter((post: Post) => post.id !== id);
 
